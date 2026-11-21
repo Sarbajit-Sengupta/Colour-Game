@@ -9,17 +9,19 @@ score = 0
 
 # the game time left, initially 30 seconds.
 timeleft = 30
+started = False
 
 
 # function that will start the game.
 def startGame(event):
-    if timeleft == 30:
-        # start the countdown timer.
-        countdown()
-
-    # run the function to
-    # choose the next colour.
-    nextColour()
+    global started
+    if not started:
+        started = True
+        e.delete(0, tkinter.END)
+        nextColour()
+        timeLabel.after(1000, countdown)
+    else:
+        nextColour()
 
 
 # Function to choose and
@@ -74,46 +76,47 @@ def countdown():
 # Driver Code
 
 # create a GUI window
-root = tkinter.Tk()
+if __name__ == "__main__":
+    root = tkinter.Tk()
 
-# set the title
-root.title("COLORGAME")
+    # set the title
+    root.title("COLORGAME")
 
-# set the size
-root.geometry("375x200")
+    # set the size
+    root.geometry("375x200")
 
-# add an instructions label
-instructions = tkinter.Label(root, text="Type in the colour"
-                                        "of the words, and not the word text!",
-                             font=('Helvetica', 12))
-instructions.pack()
+    # add an instructions label
+    instructions = tkinter.Label(root, text="Type in the colour"
+                                            "of the words, and not the word text!",
+                                 font=('Helvetica', 12))
+    instructions.pack()
 
-# add a score label
-scoreLabel = tkinter.Label(root, text="Press enter to start",
-                           font=('Helvetica', 12))
-scoreLabel.pack()
+    # add a score label
+    scoreLabel = tkinter.Label(root, text="Press enter to start",
+                               font=('Helvetica', 12))
+    scoreLabel.pack()
 
-# add a time left label
-timeLabel = tkinter.Label(root, text="Time left: " +
-                                     str(timeleft), font=('Helvetica', 12))
+    # add a time left label
+    timeLabel = tkinter.Label(root, text="Time left: " +
+                                         str(timeleft), font=('Helvetica', 12))
 
-timeLabel.pack()
+    timeLabel.pack()
 
-# add a label for displaying the colours
-label = tkinter.Label(root, font=('Helvetica', 60))
-label.pack()
+    # add a label for displaying the colours
+    label = tkinter.Label(root, font=('Helvetica', 60))
+    label.pack()
 
-# add a text entry box for
-# typing in colours
-e = tkinter.Entry(root)
+    # add a text entry box for
+    # typing in colours
+    e = tkinter.Entry(root)
 
-# run the 'startGame' function
-# when the enter key is pressed
-root.bind('<Return>', startGame)
-e.pack()
+    # run the 'startGame' function
+    # when the enter key is pressed
+    root.bind('<Return>', startGame)
+    e.pack()
 
-# set focus on the entry box
-e.focus_set()
+    # set focus on the entry box
+    e.focus_set()
 
-# start the GUI
-root.mainloop()
+    # start the GUI
+    root.mainloop()
